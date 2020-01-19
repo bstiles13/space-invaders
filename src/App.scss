@@ -1,0 +1,26 @@
+.app {
+  background-color: #1A1B1D;
+  height: 100%;
+}
+
+.user-controls {
+  display: flex;
+  align-items: center;
+
+  .welcome-text {
+    margin-right: 1rem;
+  }
+}
+
+.menu {
+  margin-bottom: 0 !important;
+}
+
+.home-link {
+  display: flex;
+  align-items: center;
+
+  .item:hover {
+    background-color: inherit !important;
+  }
+}

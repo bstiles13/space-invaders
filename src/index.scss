@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+body, #root {
+  height: 100%;
+}
+
+.app {
+  background-image: url('https://media2.giphy.com/media/lA5yV4xrvUIdq/giphy.gif?cid=790b7611a2c0589df2d13de0f1625c1572e1ac49340f4181&rid=giphy.gif');
+  background-size: cover;
+}
