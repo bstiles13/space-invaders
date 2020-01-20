@@ -46,38 +46,38 @@ export function sketch(p, handleWin, handleLoss) {
       speed: 0.9,
       interval: 900
     },
-    // {
-    //   speed: 1.1,
-    //   interval: 800
-    // },
-    // {
-    //   speed: 1.3,
-    //   interval: 700
-    // },
-    // {
-    //   speed: 1.5,
-    //   interval: 600
-    // },
-    // {
-    //   speed: 1.7,
-    //   interval: 500
-    // },
-    // {
-    //   speed: 1.9,
-    //   interval: 400
-    // },
-    // {
-    //   speed: 2.1,
-    //   interval: 300
-    // },
-    // {
-    //   speed: 2.3,
-    //   interval: 200
-    // },
-    // {
-    //   speed: 3,
-    //   interval: 100
-    // }
+    {
+      speed: 1.1,
+      interval: 800
+    },
+    {
+      speed: 1.3,
+      interval: 700
+    },
+    {
+      speed: 1.5,
+      interval: 600
+    },
+    {
+      speed: 1.7,
+      interval: 500
+    },
+    {
+      speed: 1.9,
+      interval: 400
+    },
+    {
+      speed: 2.1,
+      interval: 300
+    },
+    {
+      speed: 2.3,
+      interval: 200
+    },
+    {
+      speed: 3,
+      interval: 100
+    }
   ]
 
   //Canvas Components
@@ -357,13 +357,22 @@ export function sketch(p, handleWin, handleLoss) {
   function endGame(timeout, callback) {
     setTimeout(() => {
       stopGame = true;
+      missiles = [];
+      fires = [];
+      volley = [];
       gameOver.show();
-      callback(score);
+      mySound.disconnect();
+      mySound1.disconnect();
+      mySound2.disconnect();
+      mySound3.disconnect();
+      mySound4.disconnect();
+      callback && callback(score);
     }, timeout || 1000)
   }
 
   p.remove = () => {
     console.log('The sketch was unmounted. Width was ' + width + ', height was ' + height);
+    endGame(0);
   }
 
   function letItVolley() {
@@ -391,5 +400,4 @@ export function sketch(p, handleWin, handleLoss) {
       missileCooldown = false;
     }, 1000);
   }
-
 };

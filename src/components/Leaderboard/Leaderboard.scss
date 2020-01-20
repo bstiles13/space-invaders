@@ -1,0 +1,50 @@
+.leaderboard-container {
+    position: relative;
+    height: 100%;
+    background-image: url('../../assets/images/background.jpg');
+    background-size: cover;
+    // overflow: auto;
+    padding: 2rem 20rem;
+    display: flex;
+    flex-direction: column;
+    // background-color: rgb(68, 60, 60);
+
+    .leaderboard-segment {
+        border: 1px solid white !important;
+    }
+}
+
+.segment {
+    // background-color: rgba(0, 0, 0, 0.8) !important;
+    // max-height: 500px;
+    height: 100%;
+    color: white!important;
+    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .header, .list, .description {
+        color: white !important;
+    }
+
+    .header {
+        text-align: center;
+    }
+
+    .list {
+        overflow-y: auto;
+    }
+
+    .i.circular.icon {
+        box-shadow: 0 0 0 0.1em rgba(109, 109, 109, 0.5) inset!important;
+    }
+}
+
+.score {
+    padding-right: 1rem;
+}
+
+.popup {
+    border: 1px solid white !important;
+}

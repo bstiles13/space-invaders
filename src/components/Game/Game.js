@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { sketch } from '../../assets/sketch/objects';
 import P5Wrapper from 'react-p5-wrapper';
-
 import "p5/lib/addons/p5.sound";
+/* eslint-disable-next-line no-unused-vars */
 import p5 from 'p5';
+import Results from './Results/Results';
+
+import './Game.scss';
 
 export class Game extends Component {
     state = { toggleWin: false, toggleLoss: false };
@@ -11,16 +14,26 @@ export class Game extends Component {
     handleWin = (score) => {
         this.setState({ toggleWin: true, score });
     };
+
     handleLoss = (score) => {
         this.setState({ toggleLoss: true, score });
     };
 
+    clearResults = () => {
+        this.setState({ toggleWin: false, toggleLoss: false });
+    }
+
     render() {
+        const { user } = this.props;
+        const { score, toggleWin, toggleLoss } = this.state;
+
+        const showResults = toggleWin || toggleLoss;
+
         return (
-            <React.Fragment>
-            { !this.state.toggleLoss && <P5Wrapper sketch={p5 => sketch(p5, this.handleWin, this.handleLoss)} /> }
-            { this.state.toggleLoss && <h1 style={{ color: 'white' }}>Better luck next time!</h1> }
-            </React.Fragment>
+            <div className='game-container'>
+                {!showResults && <P5Wrapper sketch={p5 => sketch(p5, this.handleWin, this.handleLoss)} />}
+                {showResults && <Results user={user} score={score} toggleWin={toggleWin} toggleLoss={toggleLoss} clearResults={this.clearResults} />}
+            </div>
         );
     }
 }

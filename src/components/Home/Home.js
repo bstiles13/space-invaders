@@ -1,29 +1,66 @@
-import React, { Component } from 'react';
-import { Icon, Button, Header } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
+import { Segment, Icon, Button, Header, Modal } from 'semantic-ui-react';
 import audio from '../../assets/media/home.mp3';
 
 import './Home.scss';
 
-export class Home extends Component {
-    render() {
-        return (
-            <div className='home-container'>
-                <Header
-                    as='h1'
-                    content='Earth is under attack!'
-                    inverted
-                />
-                <Header
-                    as='h2'
-                    content={'USE ARROW KEYS TO MOVE\nUSE SPACEBAR TO SHOOT'}
-                    inverted
-                />
-                <Button primary size='huge'>
-                    Play
-                <Icon name='right arrow' />
-                </Button>
-                <audio src={audio} autoPlay />
-            </div>
-        )
+export const Home = () => {
+    const [modalOpen, toggleModal] = useState(false)
+
+    const history = useHistory();
+
+    const startGame = () => {
+        history.push("/game");
     }
+
+    return (
+        <div className='home-container'>
+            <div className='home-buttons'>
+                <Modal
+                    centered={false}
+                    className='instructions-modal'
+                    basic
+                    size='mini'
+                    open={modalOpen}
+                    onClose={() => toggleModal(false)}
+                    trigger={
+                        <Button
+                            onClick={() => toggleModal(true)}
+                            className='home-button'
+                            inverted
+                            size='massive'
+                        >
+                            INSTRUCTIONS
+                        </Button>
+                    }
+                >
+                    <Modal.Header>HOW TO PLAY</Modal.Header>
+                    <Modal.Content>
+                        <Modal.Description>
+                            <p>USE ARROW KEYS TO MOVE</p>
+                            <p>USE SPACEBAR TO SHOOT</p>
+                        </Modal.Description>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button onClick={() => toggleModal(false)} color='red'>
+                            <Icon name='close' />
+                            Happy Hunting!
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
+                <br />
+                <Button
+                    onClick={startGame}
+                    className='home-button'
+                    inverted
+                    color='red'
+                    size='massive'
+                >
+                    PLAY
+                </Button>
+            </div>
+            <audio src={audio} autoPlay />
+        </div>
+    )
 }

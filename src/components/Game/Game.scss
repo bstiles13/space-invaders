@@ -1,0 +1,9 @@
+.game-container {
+    background-image: url('../../assets/images/background.jpg');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: 1rem;
+    align-items: center;
+}

@@ -1,6 +1,17 @@
 .app {
   background-color: #1A1B1D;
   height: 100%;
+  display: flex;
+  flex-direction: column;;
+
+  .navbar {
+    min-height: 71px !important;
+  }
+}
+
+.user-menu {
+  display: flex !important;
+  justify-content: center !important;
 }
 
 .user-controls {
@@ -22,5 +33,26 @@
 
   .item:hover {
     background-color: inherit !important;
+  }
+}
+
+.routes-container {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.app-title {
+  position: absolute;
+  padding-top: 1.3rem;
+  width: 1%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  font-family: 'Bowlby One', 'cursive';
+}
+
+@media screen and (max-width: 1000px) {
+  .app-title {
+      display: none !important;
   }
 }

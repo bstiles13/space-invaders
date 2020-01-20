@@ -31,13 +31,14 @@ function App() {
   }
 
   const setSession = (response) => {
-    const { name, email, data_access_expiration_time } = response;
+    const { name, email, data_access_expiration_time, picture } = response;
 
     if (name && email && data_access_expiration_time) {
 
       const user = {
         name,
         email,
+        picture: picture.data.url,
         expires: data_access_expiration_time
       };
 
@@ -61,7 +62,8 @@ function App() {
   return (
     <BrowserRouter>
       <div className='app'>
-        <Menu icon='labeled' inverted>
+        <Menu className='navbar' icon='labeled' inverted>
+          <h1 style={{ color: 'white' }} className='app-title'>INVADERS</h1>
           <div className='home-link'>
             <Menu.Item
               as={Link}
@@ -91,7 +93,7 @@ function App() {
             Leaderboard
               </Menu.Item>
           <Menu.Menu position='right'>
-            <Menu.Item>
+            <Menu.Item className='user-menu'>
               <div className='user-controls'>
                 {
                   state.user && state.user.name
@@ -122,8 +124,8 @@ function App() {
         </Menu>
         <div className='routes-container'>
           <Route exact path="/" render={props => <Home />} />
-          <Route path="/game" render={props => <Game />} />
-          <Route path="/leaderboard" render={props => <Leaderboard />} />
+          <Route path="/game" render={props => <Game user={state.user} />} />
+          <Route path="/leaderboard" render={props => <Leaderboard user={state.user} />} />
         </div>
       </div>
     </BrowserRouter>

@@ -1,0 +1,16 @@
+.results-menu {
+    margin-top: 4rem !important;
+    border: 1px solid white !important;
+}
+
+.header.item {
+    text-align: center !important;
+    font-size: 1.7rem !important;
+}
+
+.item:hover {
+    &:not(.header) {
+        cursor: pointer !important;
+        background-color: rgba(255,255,255,.08) !important;
+    }
+}

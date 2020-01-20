@@ -1,9 +1,31 @@
 .home-container {
-    text-align: center;
-    white-space: pre-wrap;
-    // background-color: rgba(26, 27, 29, 0.9);
-    // padding: 2rem !important;
-    margin: 2rem auto;
-    max-width: 50%;
-    // max-height: 70%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .home-buttons {
+        margin-top: 10rem;
+        text-align: center;
+    }
+}
+
+.instructions-modal {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    text-align: center !important;
+    border: 1px solid white !important;
+
+    .header {
+        border-bottom: 1px solid rgb(134, 134, 134) !important;
+        color: white !important;
+    }
+
+    .actions {
+        text-align: center !important;
+    }
+}
+
+.home-button {
+    width: 17rem !important;
+    margin-bottom: 1rem !important;
+    font-weight: bold !important;
 }
