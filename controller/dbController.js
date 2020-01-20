@@ -22,7 +22,6 @@ module.exports = {
 
     // Queries personal score history from Mongo and populates Scores page (if signed in)    
     myScores: function(req, res) {
-      console.log('my scores');
         Score.find({ email: req.query.email }).sort({ score: -1 }).limit(15).exec(function (err, docs) {
             if (err) return res.status(400).send('Unable to get your scores');
 

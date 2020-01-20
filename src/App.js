@@ -48,7 +48,6 @@ function App() {
   }
 
   const clearSession = () => {
-    console.log('test');
     sessionStorage.clear();
     setState({ ...state, user: null })
   }
@@ -56,8 +55,6 @@ function App() {
   const handleItemClick = (e, { name }) => setState({ ...state, activeItem: name });
 
   const { activeItem } = state;
-
-  console.log('active item', activeItem);
 
   return (
     <BrowserRouter>

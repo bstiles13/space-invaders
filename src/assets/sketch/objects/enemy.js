@@ -30,7 +30,6 @@ export function Enemy(p5, x, y, where, type) {
     this.hits = function(fighter) {
         var distance = p5.dist(this.x, this.y, fighter.x + fighter.radius, fighter.y + 10);
         if (distance <= fighter.radius + 15) {
-            // console.log('hit');
             return true;
         } else {
             return false;

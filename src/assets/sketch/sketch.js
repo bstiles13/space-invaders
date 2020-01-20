@@ -146,7 +146,6 @@ export function sketch(p, handleWin, handleLoss) {
       stars[i] = new Star(p, height, width);
     }
 
-    console.log('set up', level);
     countdown = new Countdown(p, level, height, width);
 
     fighter = new Fighter(p, height, width);
@@ -207,7 +206,6 @@ export function sketch(p, handleWin, handleLoss) {
 
 
   function drawMovement() {
-    // console.log('right key', rightPressed);
     if (leftPressed) {
       fighter.x = fighter.x - 4;
     }
@@ -371,7 +369,6 @@ export function sketch(p, handleWin, handleLoss) {
   }
 
   p.remove = () => {
-    console.log('The sketch was unmounted. Width was ' + width + ', height was ' + height);
     endGame(0);
   }
 
@@ -379,7 +376,6 @@ export function sketch(p, handleWin, handleLoss) {
     if (enemies.length > 0) {
       var random = parseInt(Math.floor(Math.random() * (enemies.length)));
       var volley = new Volley(p, enemies[random].x + enemies[random].radius, enemies[random].y + 5, height, width);
-      // console.log('volley', volley);
       volleyArray.push(volley);
     }
   }
