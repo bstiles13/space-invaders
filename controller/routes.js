@@ -14,7 +14,7 @@ router.get("/myscores", dbController.myScores);
 
 // Homepage
 router.get("*", function (req, res) {
-  res.sendFile(path.resolve(__dirname, "/build/index.html"));
+  res.sendFile(path.resolve(__dirname, "../build/index.html"));
 });
 
 module.exports = router;
