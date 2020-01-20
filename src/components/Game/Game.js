@@ -24,7 +24,7 @@ export class Game extends Component {
     }
 
     render() {
-        const { user } = this.props;
+        const { user, setSession } = this.props;
         const { score, toggleWin, toggleLoss } = this.state;
 
         const showResults = toggleWin || toggleLoss;
@@ -32,7 +32,15 @@ export class Game extends Component {
         return (
             <div className='game-container'>
                 {!showResults && <P5Wrapper sketch={p5 => sketch(p5, this.handleWin, this.handleLoss)} />}
-                {showResults && <Results user={user} score={score} toggleWin={toggleWin} toggleLoss={toggleLoss} clearResults={this.clearResults} />}
+                {showResults && (
+                    <Results
+                        user={user}
+                        score={score}
+                        toggleWin={toggleWin}
+                        toggleLoss={toggleLoss}
+                        setSession={setSession}
+                        clearResults={this.clearResults} />
+                )}
             </div>
         );
     }

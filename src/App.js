@@ -121,7 +121,7 @@ function App() {
         </Menu>
         <div className='routes-container'>
           <Route exact path="/" render={props => <Home />} />
-          <Route path="/game" render={props => <Game user={state.user} />} />
+          <Route path="/game" render={props => <Game user={state.user} setSession={setSession} />} />
           <Route path="/leaderboard" render={props => <Leaderboard user={state.user} />} />
         </div>
       </div>
