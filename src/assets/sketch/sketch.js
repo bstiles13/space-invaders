@@ -18,26 +18,23 @@ import { Intro } from './objects/intro';
 import shootSound from '../media/shootsound.mp3';
 import explodeSound from '../media/explode.mp3';
 import r2Sound from '../media/r2.mp3';
-import explode1Sound from '../media/explode1.mp3';
-import muffledSound from '../media/muffled.mp3';
+import distantExplosion from '../media/muffled.mp3';
 
 /* eslint-disable  no-unused-expressions */
 
 export function sketch(p, handleWin, handleLoss) {
-
-  var playing = false;
-  var stopGame = false;
-  var lives = 3;
-  var edge = false;
-  var alive = true;
-  var score = 0;
-  var missileCooldown = false;
-  var missileCount = 0;
-  var leftPressed = false;
-  var rightPressed = false;
-  var enemyFire;
-  var level = 1;
-  var levels = [
+  let playing = false;
+  let stopGame = false;
+  let lives = 3;
+  let edge = false;
+  let score = 0;
+  let missileCooldown = false;
+  let leftPressed = false;
+  let rightPressed = false;
+  let enemyFire;
+  let countdownInterval;
+  let level = 1;
+  let levels = [
     {
       speed: 0.5,
       interval: 1000
@@ -81,42 +78,37 @@ export function sketch(p, handleWin, handleLoss) {
   ]
 
   //Canvas Components
-  var countdown;
-  var life;
-  var scorebox;
-  var img;
-  var fighter;
-  var volley;
-  var fire;
-  var stars = [];
-  var enemies = [];
-  var walls = [];
-  var missiles = [];
-  var volleyArray = [];
-  var fires = [];
-  var gameOver = {};
-  var intro = {}
-  let mySound;
-  let mySound1;
-  let mySound2;
-  let mySound3;
-  let mySound4;
+  let countdown;
+  let life;
+  let scorebox;
+  let fighter;
+  let volley;
+  let fire;
+  let stars = [];
+  let enemies = [];
+  let walls = [];
+  let missiles = [];
+  let volleyArray = [];
+  let fires = [];
+  let gameOver = {};
+  let intro = {}
+  let shootingSound;
+  let explosionSound;
+  let droidSound;
+  let distantExplosionSound;
   let width = 780;
   let height = 580;
-  let test = false;
 
   p.preload = () => {
-    mySound = p.loadSound(shootSound);
-    mySound1 = p.loadSound(explodeSound);
-    mySound2 = p.loadSound(r2Sound);
-    mySound3 = p.loadSound(muffledSound);
-    mySound4 = p.loadSound(muffledSound);
+    shootingSound = p.loadSound(shootSound);
+    explosionSound = p.loadSound(explodeSound);
+    droidSound = p.loadSound(r2Sound);
+    distantExplosionSound = p.loadSound(distantExplosion);
   }
 
   p.setup = () => {
     p.createCanvas(width, height);
-
-    startSetup();
+    startGameSetup();
   }
 
   p.draw = () => {
@@ -124,37 +116,46 @@ export function sketch(p, handleWin, handleLoss) {
     p.background(0);
     p.textSize(15);
     p.fill(255, 254, 247);
+
     if (lives <= 0) {
       endGame(2000, handleLoss)
     }
+
     if (enemies.length <= 0 && (level + 1) > levels.length) {
       endGame(0, handleWin);
-    } else if (enemies.length <= 0) {
-      missiles = [];
-      fires = [];
-      volley = [];
-      level++;
-      clearInterval(enemyFire);
-      startSetup();
+    }
+    
+    if (enemies.length <= 0) {
+      handleNextLevel();
     }
 
-    drawObjects(drawMovement)
+    drawGameObjects(moveGameObjects)
   }
 
-  function startSetup() {
-    for (var i = 0; i < 100; i++) {
+  function handleNextLevel() {
+    missiles = [];
+    fires = [];
+    volley = [];
+    volleyArray = [];
+    level++;
+    clearInterval(countdownInterval);
+    clearInterval(enemyFire);
+    startGameSetup();
+  }
+
+  function startGameSetup() {
+    for (let i = 0; i < 100; i++) {
       stars[i] = new Star(p, height, width);
     }
 
     countdown = new Countdown(p, level, height, width);
-
     fighter = new Fighter(p, height, width);
     scorebox = new Scorebox(p, score, height, width);
     life = new Life(p, height, width);
     gameOver = new GameOver(p, height, width);
     intro = new Intro(p, height, width);
 
-    for (var i = 0; i < 33; i++) {
+    for (let i = 0; i < 33; i++) {
       const enemySpeed = get(levels, [level - 1, 'speed'], 0);
       if (i < 11) {
         enemies[i] = new Enemy(p, i * 50 + 80, 40, enemySpeed, 1, height, width);
@@ -165,20 +166,22 @@ export function sketch(p, handleWin, handleLoss) {
       }
     }
 
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       walls[i] = new Wall(p, i * 240 + 80, height - 200, height, width);
     }
 
+    initCountdown();
+
     const enemyFireInterval = get(levels, [level - 1, 'interval'], 0);
     enemyFire = setInterval(function () {
-      lives > 0 && countdown.count <= 0 ? letItVolley() : false;
+      lives > 0 && countdown.count <= 0 && playing ? letItVolley() : false;
     }, enemyFireInterval);
   }
 
-  function drawObjects(func) {
+  function drawGameObjects(func) {
     edge = false;
 
-    for (var i = 0; i < stars.length; i++) {
+    for (let i = 0; i < stars.length; i++) {
       stars[i].show();
     }
 
@@ -192,20 +195,19 @@ export function sketch(p, handleWin, handleLoss) {
     life.show(lives);
     fighter.show();
 
-    for (var i = 0; i < enemies.length; i++) {
+    for (let i = 0; i < enemies.length; i++) {
       enemies[i].show();
     }
 
-    for (var i = 0; i < walls.length; i++) {
+    for (let i = 0; i < walls.length; i++) {
       walls[i].show();
     }
 
     func && countdown.view === false && playing ? func() : false;
-    // func && alive ? func() : false;
   }
 
 
-  function drawMovement() {
+  function moveGameObjects() {
     if (leftPressed) {
       fighter.x = fighter.x - 4;
     }
@@ -214,7 +216,7 @@ export function sketch(p, handleWin, handleLoss) {
       fighter.x = fighter.x + 4;
     }
 
-    for (var i = 0; i < enemies.length; i++) {
+    for (let i = 0; i < enemies.length; i++) {
       enemies[i].move();
       if (enemies[i].x + (enemies[i].radius * 2) >= width || enemies[i].x <= 0) {
         edge = true;
@@ -225,31 +227,31 @@ export function sketch(p, handleWin, handleLoss) {
     }
 
     if (edge) {
-      for (var i = 0; i < enemies.length; i++) {
+      for (let i = 0; i < enemies.length; i++) {
         enemies[i].reverse();
       }
     }
 
-    for (var i = 0; i < missiles.length; i++) {
+    for (let i = 0; i < missiles.length; i++) {
       missiles[i].show();
       missiles[i].move();
-      for (var z = enemies.length - 1; z >= 0; z--) {
+      for (let z = enemies.length - 1; z >= 0; z--) {
         if (missiles[i].hits(enemies[z])) {
-          mySound3.play();
+          distantExplosionSound.play();
           missiles[i].killEnemy();
           enemies.splice(z, 1);
           score += 20;
           scorebox.updateScore(score);
         }
       }
-      for (var z = walls.length - 1; z >= 0; z--) {
+      for (let z = walls.length - 1; z >= 0; z--) {
         if (missiles[i].hitsWall(walls[z])) {
           missiles[i].killWall();
         }
       }
     }
 
-    for (var i = 0; i < missiles.length; i++) {
+    for (let i = 0; i < missiles.length; i++) {
       if (missiles[i].toggleEnemy === true) {
         if (i % 2 === 0) {
           missiles.splice(i, 2);
@@ -259,23 +261,23 @@ export function sketch(p, handleWin, handleLoss) {
       }
     }
 
-    for (var i = 0; i < missiles.length; i++) {
+    for (let i = 0; i < missiles.length; i++) {
       if (missiles[i].toggleWall === true) {
         missiles.splice(i, 1);
       }
     }
 
-    for (var i = 0; i < volleyArray.length; i++) {
+    for (let i = 0; i < volleyArray.length; i++) {
       volleyArray[i].show();
       volleyArray[i].move();
       if (volleyArray[i].hits(fighter)) {
         volleyArray[i].kill();
-        lives > 1 ? mySound1.play() : mySound2.play();
+        lives > 1 ? explosionSound.play() : droidSound.play();
         lives--;
       }
-      for (var z = walls.length - 1; z >= 0; z--) {
+      for (let z = walls.length - 1; z >= 0; z--) {
         if (volleyArray[i].hitsWall(walls[z])) {
-          mySound4.play();
+          distantExplosionSound.play();
           walls[z].takeDamage();
           fire = new Fire(p, walls[z].x, walls[z].y, height, width);
           fires.push(fire);
@@ -284,9 +286,9 @@ export function sketch(p, handleWin, handleLoss) {
       }
     }
 
-    for (var i = 0; i < walls.length; i++) {
+    for (let i = 0; i < walls.length; i++) {
       if (walls[i].destroy === true) {
-        for (var z = fires.length - 1; z >= 0; z--) {
+        for (let z = fires.length - 1; z >= 0; z--) {
           if (fires[z].proximity(walls[i])) {
             fires.splice(z, 1);
           }
@@ -295,18 +297,15 @@ export function sketch(p, handleWin, handleLoss) {
       }
     }
 
-    for (var i = 0; i < volleyArray.length; i++) {
+    for (let i = 0; i < volleyArray.length; i++) {
       if (volleyArray[i].toggle === true) {
         volleyArray.splice(i, 1);
       }
     }
 
-    for (var i = 0; i < fires.length; i++) {
+    for (let i = 0; i < fires.length; i++) {
       fires[i].show();
     }
-
-    // lives > 0 ? true : alive = false;
-
   }
 
   p.keyReleased = ({ keyCode }) => {
@@ -328,21 +327,20 @@ export function sketch(p, handleWin, handleLoss) {
         break;
       case 32:
         if (!playing) {
-          initCountdown();
           playing = true;
         } else {
-          if (!missileCooldown) {
-            var missile = new Missile(p, fighter.x + 0, fighter.y, 1, height, width);
+          if (!missileCooldown && countdown.count <= 0) {
+            let missile = new Missile(p, fighter.x + 0, fighter.y, 1, height, width);
             missiles.push(missile);
-            var missile = new Missile(p, fighter.x + 55, fighter.y, -1, height, width);
+            missile = new Missile(p, fighter.x + 55, fighter.y, -1, height, width);
             missiles.push(missile);
-            mySound.play();
+            shootingSound.play();
             setTimeout(function () {
-              var missile = new Missile(p, fighter.x + 0, fighter.y, 1, height, width);
+              missile = new Missile(p, fighter.x + 0, fighter.y, 1, height, width);
               missiles.push(missile);
-              var missile = new Missile(p, fighter.x + 55, fighter.y, -1, height, width);
+              missile = new Missile(p, fighter.x + 55, fighter.y, -1, height, width);
               missiles.push(missile);
-              mySound.play();
+              shootingSound.play();
             }, 150);
             missileCooldown = true;
             cooldown();
@@ -355,15 +353,16 @@ export function sketch(p, handleWin, handleLoss) {
   function endGame(timeout, callback) {
     setTimeout(() => {
       stopGame = true;
+      gameOver.show();
       missiles = [];
       fires = [];
       volley = [];
-      gameOver.show();
-      mySound.disconnect();
-      mySound1.disconnect();
-      mySound2.disconnect();
-      mySound3.disconnect();
-      mySound4.disconnect();
+      volleyArray = [];
+      shootingSound.disconnect();
+      explosionSound.disconnect();
+      droidSound.disconnect();
+      distantExplosionSound.disconnect();
+      distantExplosionSound.disconnect();
       callback && callback(score);
     }, timeout || 1000)
   }
@@ -373,20 +372,22 @@ export function sketch(p, handleWin, handleLoss) {
   }
 
   function letItVolley() {
-    if (enemies.length > 0) {
-      var random = parseInt(Math.floor(Math.random() * (enemies.length)));
-      var volley = new Volley(p, enemies[random].x + enemies[random].radius, enemies[random].y + 5, height, width);
+    if (enemies.length > 0 && countdown.count <= 0) {
+      let random = parseInt(Math.floor(Math.random() * (enemies.length)));
+      volley = new Volley(p, enemies[random].x + enemies[random].radius, enemies[random].y + 5, height, width);
       volleyArray.push(volley);
     }
   }
 
   function initCountdown() {
-    setInterval(function () {
+    countdownInterval = setInterval(function () {
       if (!countdown) return;
-      if (countdown.count > 0) {
-        countdown.count--;
-      } else {
-        countdown.view = false;
+      if (playing) {
+        if (countdown.count > 0) {
+          countdown.count--;
+        } else {
+          countdown.view = false;
+        }
       }
     }, 1000);
   }
