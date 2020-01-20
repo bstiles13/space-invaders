@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter,
   Route,
-  Link,
+  NavLink,
 } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { Icon, Menu, Button } from 'semantic-ui-react';
@@ -63,28 +63,20 @@ function App() {
           <h1 style={{ color: 'white' }} className='app-title'>INVADERS</h1>
           <div className='home-link'>
             <Menu.Item
-              as={Link}
+              as={NavLink}
               to='/'
-              name='home'
-              onClick={handleItemClick}
             >
-              <img src='https://cdn4.iconfinder.com/data/icons/animals-wildlife-color-1/128/alien-face-green-2-512.png' />
+              <img src='http://www.clker.com/cliparts/e/M/n/O/z/h/del-icon-md.png' />
             </Menu.Item>
           </div>
           <Menu.Item
-            as={Link} to='/game'
-            name='gamepad'
-            active={activeItem === 'gamepad'}
-            onClick={handleItemClick}
+            as={NavLink} to='/game'
           >
             <Icon name='gamepad' />
             Play
             </Menu.Item>
           <Menu.Item
-            as={Link} to='/leaderboard'
-            name='users'
-            active={activeItem === 'users'}
-            onClick={handleItemClick}
+            as={NavLink} to='/leaderboard'
           >
             <Icon name='users' />
             Leaderboard

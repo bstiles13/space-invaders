@@ -1,4 +1,3 @@
-export * from '../app';
 export * from './background';
 export * from './countdown';
 export * from './enemy';

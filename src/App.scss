@@ -31,8 +31,10 @@
   display: flex;
   align-items: center;
 
-  .item:hover {
-    background-color: inherit !important;
+  .item {
+    &:hover, &.active {
+      background-color: inherit !important;
+    }
   }
 }
 
