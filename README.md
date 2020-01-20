@@ -1,68 +1,28 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Invaders
 
-## Available Scripts
+Invaders is a two-dimensional fixed shooter game in which the player controls a starship by moving it horizontally across the bottom of the screen and firing at descending enemies. The aim is to defeat three rows of eleven enemies that move horizontally back and forth across the screen as they advance toward the bottom of the screen. The player defeats an enemy, and earns points, by shooting it with the starship's laser cannons. Defeating the enemies brings another wave that is more difficult, with faster movement and a higher fire rate, a loop which continues for 10 levels.
 
-In the project directory, you can run:
+The enemies attempt to destroy the player's starship by firing at it while they approach the bottom of the screen. If they reach the bottom or damage the player's starship three times, the invasion is successful and the game ends. The starship is partially protected by several stationary defense ships that are gradually destroyed by numerous blasts from the enemies.
 
-### `npm start`
+## The game
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![home](https://github.com/bstiles13/invaders/blob/master/src/assets/screenshots/screenshot_home.png)
+![game](https://github.com/bstiles13/invaders/blob/master/src/assets/screenshots/screenshot_game.png)
+<br/><br/>
+#### How to Play:
+- Left and right arrows to move
+- Spacebar to shoot
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+#### Levels:
+- 10 levels, each consisting of three rows of eleven enemy ships
+- Each level triggers more aggressive enemies
 
-### `npm test`
+## Login:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Click the <b>Sign In</b> button to submit and track your high scores. The app authenticates players via Facebook Login for maxiumum security. Users do not need to create a traditional account and password on Invaders.
 
-### `npm run build`
+## Scores
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+See global score leaders or track your personal high scores.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+![scores](https://github.com/bstiles13/invaders/blob/master/src/assets/screenshots/screenshot_scores.png)
