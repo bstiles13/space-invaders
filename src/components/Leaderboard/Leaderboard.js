@@ -46,7 +46,7 @@ export class Leaderboard extends Component {
 
         return scores.map((score, i) => {
             return (
-                <List.Item key={i}>
+                <List.Item className='leaderboard-list-item' key={i}>
                     <List.Content className='score' floated='right'>
                         {score.score}
                     </List.Content>
