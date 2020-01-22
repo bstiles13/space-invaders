@@ -19,7 +19,7 @@ function App() {
   }, []);
 
   const checkSession = () => {
-    let user = sessionStorage.getItem('invadersPlayer');
+    let user = localStorage.getItem('invadersPlayer');
 
     if (!user) return;
 
@@ -42,13 +42,13 @@ function App() {
         expires: data_access_expiration_time
       };
 
-      sessionStorage.setItem('invadersPlayer', JSON.stringify(user));
+      localStorage.setItem('invadersPlayer', JSON.stringify(user));
       setState({ ...state, user })
     }
   }
 
   const clearSession = () => {
-    sessionStorage.clear();
+    localStorage.clear();
     setState({ ...state, user: null })
   }
 
