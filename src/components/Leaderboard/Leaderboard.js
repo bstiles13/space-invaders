@@ -50,7 +50,7 @@ export class Leaderboard extends Component {
                     <List.Content className='score' floated='right'>
                         {score.score}
                     </List.Content>
-                    <Image avatar src={score.picture || personImage} />
+                    <Image avatar src={score.picture || personImage} onError={i => i.target.src='https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png'} />
                     <List.Content>
                         <List.Header>{score.player}</List.Header>
                         <List.Description>{this.formatDate(score.date)}</List.Description>
